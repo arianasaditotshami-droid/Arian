@@ -1,15 +1,15 @@
 import os
 import sqlite3
+import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import (
     InlineKeyboardMarkup, InlineKeyboardButton, 
     ReplyKeyboardMarkup, KeyboardButton
 )
 
-# استفاده از مقادیر عمومی و تست برای عبور از ارور سایت تلگرام
 API_ID = 611335
 API_HASH = "d524b414d21f4d3e708af9b6b06353d7"
-BOT_TOKEN = "8975637630:AAGldM14z3YF6M-PhjohByUq0g-RENnH7M4"  # توکن ربات خود را اینجا وارد کنید
+BOT_TOKEN = "8975637630:AAGldM14z3YF6M-PhjohByUq0g-RENnH7M4"  # توکن ربات خود را اینجا بگذارید
 ADMIN_ID = 8635403087
 CARD_NUMBER = "6104337300101910"
 
@@ -224,15 +224,10 @@ async def admin_panel(client, message):
         return
     await message.reply("به پنل مدیریت خوش آمدید:", reply_markup=admin_menu())
 
-import asyncio
-
+# راه‌اندازی استاندارد بدون ارور لوپ
 if __name__ == "__main__":
     print("Bot is running...")
-    try:
-        app.run()
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        app.start()
-        print("Bot started with custom loop!")
-        asyncio.get_event_loop().run_forever()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(app.start())
+    asyncio.get_event_loop().run_forever()
+    
