@@ -224,7 +224,15 @@ async def admin_panel(client, message):
         return
     await message.reply("به پنل مدیریت خوش آمدید:", reply_markup=admin_menu())
 
+import asyncio
+
 if __name__ == "__main__":
     print("Bot is running...")
-    app.run()
-  
+    try:
+        app.run()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        app.start()
+        print("Bot started with custom loop!")
+        asyncio.get_event_loop().run_forever()
